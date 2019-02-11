@@ -29,6 +29,21 @@ class ql_agent:
 
     # ---------------------------------------------------------
     # ---------------------------------------------------------
+    def ith_train(self, i_epoch, episodes, real_locations):
+        if i_epoch == 0:
+            self.EPS = 0.8
+        elif i_epoch == 1:
+            self.EPS = 0.6
+        elif i_epoch == 2:
+            self.EPS = 0.4
+        elif i_epoch == 3:
+            self.EPS = 0.2
+        elif i_epoch == 4:
+            self.EPS = 0.1
+        self.train(episodes, real_locations)
+
+    # ---------------------------------------------------------
+    # ---------------------------------------------------------
     def train(self, episodes, real_locations):
         i = 0
         mean_acm_reward = 0
@@ -53,35 +68,6 @@ class ql_agent:
                 mean_acm_success = 0
 
         print("{:0.2f}".format(float(mean_acm_reward_epoch) / episodes.shape[0]) + " " + str(mean_acm_success_epoch) + " " + str(len(self.Q)))
-
-
-    # ---------------------------------------------------------
-    # ---------------------------------------------------------
-    def ith_train(self, i_epoch, episodes, real_locations):
-        if i_epoch == 0:
-            self.EPS = 0.8
-        elif i_epoch == 1:
-            self.EPS = 0.6
-        elif i_epoch == 2:
-            self.EPS = 0.4
-        elif i_epoch == 3:
-            self.EPS = 0.2
-        elif i_epoch == 4:
-            self.EPS = 0.1
-        self.train(episodes, real_locations)
-
-    # ---------------------------------------------------------
-    # ---------------------------------------------------------
-    # Select an action using E-greedy policy
-    def select_action(self, observation):
-        sample = random.random()
-        eps_threshold = self.EPS
-        self.steps_done += 1
-        if sample > eps_threshold:
-            state = self.from_observation_to_state(observation)
-            return self.get_best_action(state)
-        else:
-            return random.randrange(self.N_ACTIONS)
 
     # ---------------------------------------------------------
     # ---------------------------------------------------------
@@ -112,39 +98,26 @@ class ql_agent:
 
     # ---------------------------------------------------------
     # ---------------------------------------------------------
-    def print_step(self, iter, obs, next_obs, action, state, next_state):
-        print("---------------")
-        print("Iter: " + str(iter) + " " +
-              "[" + "{:0.2f}".format(obs[4]) + ", " + "{:0.2f}".format(obs[5]) + "] " +
-              "[" + "{:0.2f}".format(next_obs[4]) + ", " + "{:0.2f}".format(next_obs[5]) + "] " +
-              "A:" + str(action) + " " + state[4:6] + " " + next_state[4:6])
-        print("---------------")
-        self.print_Q()
+    # Select an action using E-greedy policy
+    def select_action(self, observation):
+        sample = random.random()
+        eps_threshold = self.EPS
+        self.steps_done += 1
+        if sample > eps_threshold:
+            state = self.from_observation_to_state(observation)
+            return self.get_best_action(state)
+        else:
+            return random.randrange(self.N_ACTIONS)
 
     # ---------------------------------------------------------
     # ---------------------------------------------------------
-    def print_step_done(self, iter, obs, action, state):
-        print("---------------")
-        print("Iter: " + str(iter) + " " +
-              "[" + "{:0.2f}".format(obs[4]) + ", " + "{:0.2f}".format(obs[5]) + "] " +
-              "[--, --] " +
-              "A:" + str(action) + " " + state[4:6] + " [--, --]")
-        print("---------------")
-        self.print_Q()
-
-    # ---------------------------------------------------------
-    # ---------------------------------------------------------
-    def print_Q(self):
-        print(len(self.Q))
-        for key in self.Q:
-            print(key[4:6] + " " + key[6] + " -> " + str(self.Q[key]))
-
-    # ---------------------------------------------------------
-    # ---------------------------------------------------------
-    # generate AGENT_N_RANDOM_TEST samples. The final is the centroid of all success estimations
+    # generate AGENT_N_RANDOM_TEST samples. The final is the centroid of all successful estimations
+    # The agent reach the objective when the previous where the is a bucle, i.e. now 0(1) and previous 1(0), or now 2(3) and previous 3(2)
     def test(self, fp):
         acm_estimated_locX = 0
         acm_estimated_locY = 0
+
+        previous_action = -1
         for i in range(self.AGENT_N_RANDOM_TEST):
             random_loc = self.env.get_random_location()
             observation = np.concatenate((fp, random_loc))
@@ -152,20 +125,37 @@ class ql_agent:
             done = 0
             while n_steps < self.MAX_STEPS_BY_EPISODE and done == 0:
                 state = self.from_observation_to_state(observation)
-                best_action = self.get_best_action_test(state)
-                if best_action == -1:
-                    break
+                best_action = self.get_best_action(state)
                 new_observation, done = self.env.do_step_test(observation, best_action)
-                observation = new_observation
-                n_steps += 1
 
-            acm_estimated_locX += observation[observation.shape[0] - 2]
-            acm_estimated_locY += observation[observation.shape[0] - 1]
+                if done != -1:
+                    is_at_objective = self.check_objective(best_action, previous_action)
+                    if is_at_objective:
+                        observation[self.env.pos_x] = (observation[self.env.pos_x] + new_observation[self.env.pos_x]) / 2
+                        observation[self.env.pos_y] = (observation[self.env.pos_y] + new_observation[self.env.pos_y]) / 2
+                        done = 1
+                    else:
+                        observation = new_observation
+                        n_steps += 1
+                    previous_action = best_action
+
+            acm_estimated_locX += observation[self.env.pos_x]
+            acm_estimated_locY += observation[self.env.pos_y]
 
         new_loc = np.zeros(2)
         new_loc[0] = acm_estimated_locX / self.AGENT_N_RANDOM_TEST
         new_loc[1] = acm_estimated_locY / self.AGENT_N_RANDOM_TEST
         return new_loc
+
+    # ---------------------------------------------------------
+    # ---------------------------------------------------------
+    def check_objective(self, best_action, previous_action):
+        if best_action == 0 and previous_action == 1 or \
+           best_action == 1 and previous_action == 0 or \
+           best_action == 2 and previous_action == 3 or \
+           best_action == 3 and previous_action == 2:
+            return True
+        return False
 
     # ---------------------------------------------------------
     # ---------------------------------------------------------
@@ -183,29 +173,6 @@ class ql_agent:
                 best_value = v
                 best_action = i_action
         return best_action
-
-    # ---------------------------------------------------------
-    # ---------------------------------------------------------
-    # if there is not entry in the Q table, return -1
-    # TODO
-    def get_best_action_test(self, state):
-        best_value = -1000000
-        best_action = 0
-        all_not_in_Q_table = True
-
-        for i_action in range(self.N_ACTIONS):
-            sta = state + str(i_action)
-            if sta in self.Q:
-                v = self.Q[sta]
-                all_not_in_Q_table = False
-                if v > best_value:
-                    best_value = v
-                    best_action = i_action
-
-        if all_not_in_Q_table:
-            return -1
-        else:
-            return best_action
 
     # ---------------------------------------------------------
     # ---------------------------------------------------------
@@ -274,3 +241,32 @@ class ql_agent:
         s = s + "{0:0>2}".format(cell_x)   # 2 digits
         s = s + "{0:0>2}".format(cell_y)   # 2 digits
         return s
+
+    # ---------------------------------------------------------
+    # ---------------------------------------------------------
+    def print_step(self, iter, obs, next_obs, action, state, next_state):
+        print("---------------")
+        print("Iter: " + str(iter) + " " +
+              "[" + "{:0.2f}".format(obs[4]) + ", " + "{:0.2f}".format(obs[5]) + "] " +
+              "[" + "{:0.2f}".format(next_obs[4]) + ", " + "{:0.2f}".format(next_obs[5]) + "] " +
+              "A:" + str(action) + " " + state[4:6] + " " + next_state[4:6])
+        print("---------------")
+        self.print_Q()
+
+    # ---------------------------------------------------------
+    # ---------------------------------------------------------
+    def print_step_done(self, iter, obs, action, state):
+        print("---------------")
+        print("Iter: " + str(iter) + " " +
+              "[" + "{:0.2f}".format(obs[4]) + ", " + "{:0.2f}".format(obs[5]) + "] " +
+              "[--, --] " +
+              "A:" + str(action) + " " + state[4:6] + " [--, --]")
+        print("---------------")
+        self.print_Q()
+
+    # ---------------------------------------------------------
+    # ---------------------------------------------------------
+    def print_Q(self):
+        print(len(self.Q))
+        for key in self.Q:
+            print(key[4:6] + " " + key[6] + " -> " + str(self.Q[key]))

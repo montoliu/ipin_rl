@@ -99,18 +99,15 @@ class envivonment:
 
     # ---------------------------------------------------------
     # ---------------------------------------------------------
-    # TODO
     def do_step_test(self, observation, action):
-        if action == 0:
-            new_observation = observation
-            done = 1
+        fp = observation[0:len(observation) - 2]
+        loc = observation[len(observation) - 2:len(observation)]
+        new_loc = self.move(loc, action)
+        new_observation = np.concatenate((fp, new_loc))
+        if self.is_outside(new_loc):
+            done = -1
         else:
-            fp = observation[0:len(observation) - 2]
-            loc = observation[len(observation) - 2:len(observation)]
-            new_loc = self.move(loc, action)
-            new_observation = np.concatenate((fp, new_loc))
             done = 0
-
         return new_observation, done
 
     # ---------------------------------------------------------

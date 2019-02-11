@@ -43,11 +43,11 @@ class configuration:
         self.DO_GRID_MODE = True
         self.DO_ONLY_GOOG_APS = False
 
-        self.DO_KNN = False
+        self.DO_KNN = True
         self.DO_DRL = False
         self.DO_DRL_TRAINING = False
         self.DO_QL = True
-        self.DO_QL_TRAINING = True
+        self.DO_QL_TRAINING = False
 
         self.ENV_N_EPISODES_PER_FP = 9
         self.ENV_STEP = 0.5
@@ -79,6 +79,6 @@ class configuration:
         self.KNN_K = 3
         self.TRAINING_FILENAME = "../MODELS/ml.model"
 
-        self.DATABASE = "../DATA/mini.csv"
-        #self.DATABASE = "../DATA/juguete.csv"
+        #self.DATABASE = "../DATA/mini.csv"
+        self.DATABASE = "../DATA/juguete.csv"
         #self.DATABASE = "../DATA/IPIN16.csv"

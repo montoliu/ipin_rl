@@ -26,7 +26,7 @@ def get_data_without_header(filename):
 # Save a csv file to disk
 def save_data(data, filename):
     df = pd.DataFrame(data)
-    df.to_csv(filename,  index=False, header=False)
+    df.to_csv(filename,  index=False, header=False, float_format='%.2f')
 
 
 # -----------------------------------------------------------
