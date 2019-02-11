@@ -1,0 +1,5 @@
+There are 30 samples and 4 WAPS
+Train data has: 18 samples
+Test data has : 12 samples
+KNN -> Mean: 0.73, 75% percentile: 0.96
+QL  -> Mean: 19.59, 75% percentile: 33.33
