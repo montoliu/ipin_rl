@@ -79,5 +79,6 @@ class configuration:
         self.KNN_K = 3
         self.TRAINING_FILENAME = "../MODELS/ml.model"
 
-        self.DATABASE = "../DATA/juguete.csv"
+        self.DATABASE = "../DATA/mini.csv"
+        #self.DATABASE = "../DATA/juguete.csv"
         #self.DATABASE = "../DATA/IPIN16.csv"

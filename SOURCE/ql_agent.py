@@ -40,18 +40,9 @@ class ql_agent:
             n_steps, acm_reward, last_obs, done = self.run_episode(ep, real_locations[i, ])
 
             if done == 1:
-                str_done = "Success"
                 mean_acm_success += 1
                 mean_acm_success_epoch += 1
-            elif done == -1:
-                str_done = "Fail"
-            else:
-                str_done = "Unfinished"
 
-            #self.DEBUG.println(" ---> Steps: " + str(n_steps) + " Total reward: " + str(acm_reward) + " Done: " + str_done, 1)
-            #self.DEBUG.println("     ---> Real loc : [" + "{:0.2f}".format(real_locations[i, 0]) + "," + "{:0.2f}".format(real_locations[i, 1]) + "]", 1)
-            #self.DEBUG.println("     ---> First loc: [" + "{:0.2f}".format(ep[self.env.pos_x]) + "," + "{:0.2f}".format(ep[self.env.pos_y]) + "]", 1)
-            #self.DEBUG.println("     ---> Last loc : [" + "{:0.2f}".format(last_obs[self.env.pos_x]) + "," + "{:0.2f}".format(last_obs[self.env.pos_y]) + "]", 1)
             i += 1
             mean_acm_reward += acm_reward
             mean_acm_reward_epoch += acm_reward
@@ -108,10 +99,14 @@ class ql_agent:
             if done == 0:
                 next_state = self.from_observation_to_state(next_observation)
                 self.actualize_q_values(state, next_state, action, reward)
+
+                #self.print_step(n_step, observation, next_observation, action, state, next_state)
                 observation = next_observation
                 n_step += 1
             else:
                 self.actualize_q_values_done(state, action, reward)
+                #self.print_step_done(n_step, observation, action, state)
+
 
         return n_step, acm_reward, next_observation, done
 

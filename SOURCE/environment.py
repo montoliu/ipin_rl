@@ -70,7 +70,6 @@ class envivonment:
 
     # ---------------------------------------------------------
     # ---------------------------------------------------------
-    # 1 up, 2 down, 3 right, 4 left
     # Each step without reaching the objective -> reward -small number
     # If it reachs the objective -> reward -> big number
     # If it downs out of the environment -> -big number
@@ -116,15 +115,16 @@ class envivonment:
 
     # ---------------------------------------------------------
     # ---------------------------------------------------------
+    # 0 up, 1 down, 2 right, 3 left
     def move(self, loc, action):
         new_loc = np.copy(loc)
-        if action == 1:
+        if action == 0:
             new_loc[1] += self.STEP  # up
-        elif action == 2:
+        elif action == 1:
             new_loc[1] -= self.STEP  # down
-        elif action == 3:
+        elif action == 2:
             new_loc[0] += self.STEP  # right
-        elif action == 4:
+        elif action == 3:
             new_loc[0] -= self.STEP  # left
         return new_loc
 
