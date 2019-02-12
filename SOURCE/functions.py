@@ -126,9 +126,12 @@ def ips_drl(train_data, test_data, train_loc, test_loc, do_training, do_grid_mod
 # run ql algorithm
 def ips_ql(train_data, test_data, train_loc, test_loc, do_training, do_grid_mode, training_filename, conf):
     indoorloc_model = IPS_ql.IndoorLocQL(train_data, train_loc, conf, do_training, do_grid_mode, training_filename) #Train
-    estimated_loc, v_error, mean_acc, p75_acc = indoorloc_model.get_accuracy(test_data, test_loc) #Test and return accuracy
+    estimated_loc, v_error, mean_acc, p75_acc, est_results = indoorloc_model.get_accuracy(test_data, test_loc) #Test and return accuracy
 
-    debug_data = np.concatenate((test_loc, estimated_loc, np.reshape(v_error, [len(v_error), 1])), axis=1)
+    debug_data = np.concatenate((test_loc,
+                                 estimated_loc,
+                                 np.reshape(v_error, [len(v_error), 1]),
+                                 np.reshape(est_results, [len(est_results), 1])), axis=1)
     save_data(debug_data, "../RESULTS/resultsQL.csv")
 
-    return mean_acc, p75_acc
+    return mean_acc, p75_acc, np.sum(est_results) / len(est_results)

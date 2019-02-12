@@ -41,7 +41,7 @@ class configuration:
     def __init__(self):
         self.DO_SETS = False
         self.DO_GRID_MODE = True
-        self.DO_ONLY_GOOG_APS = False
+        self.DO_ONLY_GOOG_APS = True
 
         self.DO_KNN = True
         self.DO_DRL = False
@@ -77,8 +77,11 @@ class configuration:
         self.TH_PCT_GOOD_AP = 0.3
         self.TH_RSSI_GOOD = -60
         self.KNN_K = 3
-        self.TRAINING_FILENAME = "../MODELS/ml.model"
 
         #self.DATABASE = "../DATA/mini.csv"
-        self.DATABASE = "../DATA/juguete.csv"
-        #self.DATABASE = "../DATA/IPIN16.csv"
+
+        #self.TRAINING_FILENAME = "../MODELS/ml.model"
+        #self.DATABASE = "../DATA/juguete.csv"
+
+        self.TRAINING_FILENAME = "../MODELS/ml.IPIN16"
+        self.DATABASE = "../DATA/IPIN16.csv"

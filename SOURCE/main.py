@@ -80,9 +80,11 @@ if __name__ == "__main__":
         print("\n--------------------- ")
         print("--- QL  Algorithm --- ")
         print("--------------------- ")
-        ql_p50, ql_p75 = myf.ips_ql(x_train, x_test, y_train, y_test, conf.DO_QL_TRAINING, conf.DO_GRID_MODE,
+        ql_p50, ql_p75, ql_pct = myf.ips_ql(x_train, x_test, y_train, y_test, conf.DO_QL_TRAINING, conf.DO_GRID_MODE,
                                    training_filename, conf)
-        print("Mean: " + "{:0.2f}".format(ql_p50) + ", 75% percentile: " + "{:0.2f}".format(ql_p75))
+        print("Mean: " + "{:0.2f}".format(ql_p50) +
+              ", 75% percentile: " + "{:0.2f}".format(ql_p75) +
+              ", Pct " + "{:0.2f}".format(ql_pct))
         print("--------------------- ")
 
 

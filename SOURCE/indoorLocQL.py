@@ -71,9 +71,9 @@ class IndoorLocQL:
     # Get statistics of the accuracy of a set of test fingerprints
     # ---------------------------------------------------------
     def get_accuracy(self, test_fingerprints, test_locations):
-        estimated_locations = self.get_locations(test_fingerprints)
+        estimated_locations, estimated_results = self.get_locations(test_fingerprints)
         v_errors = self.estimate_accuracy(estimated_locations, test_locations)
-        return estimated_locations, v_errors, np.mean(v_errors), np.percentile(v_errors, 75)
+        return estimated_locations, v_errors, np.mean(v_errors), np.percentile(v_errors, 75), estimated_results
 
     # ---------------------------------------------------------
     # get_location
@@ -82,8 +82,8 @@ class IndoorLocQL:
     # All the samples are in the same floor
     # ---------------------------------------------------------
     def get_location(self, fp):
-        estimated_loc = self.agent.test(fp)
-        return estimated_loc
+        estimated_loc, result = self.agent.test(fp)
+        return estimated_loc, result
 
     # ---------------------------------------------------------
     # get_locations
@@ -93,9 +93,11 @@ class IndoorLocQL:
     def get_locations(self, test_fingerprints):
         n_test = test_fingerprints.shape[0]
         est_locations = np.zeros((n_test, 2))
+        est_results = np.zeros(n_test)
+
         i = 0
         for fp in test_fingerprints:
-            est_locations[i, ] = self.get_location(fp)
+            est_locations[i, ], est_results[i] = self.get_location(fp)
             i += 1
 
-        return est_locations
+        return est_locations, est_results

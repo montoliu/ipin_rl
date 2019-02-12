@@ -13,7 +13,7 @@ class ql_agent:
 
         self.env = env
         self.steps_done = 0
-        self.AGENT_N_RANDOM_TEST = conf.AGENT_N_RANDOM_TEST
+        self.N_RANDOM_TEST = conf.AGENT_N_RANDOM_TEST
 
         self.Q = dict()
 
@@ -114,48 +114,78 @@ class ql_agent:
     # generate AGENT_N_RANDOM_TEST samples. The final is the centroid of all successful estimations
     # The agent reach the objective when the previous where the is a bucle, i.e. now 0(1) and previous 1(0), or now 2(3) and previous 3(2)
     def test(self, fp):
-        acm_estimated_locX = 0
-        acm_estimated_locY = 0
+        acm_estimated_locX_all = 0
+        acm_estimated_locY_all = 0
+        acm_estimated_locX_goods = 0
+        acm_estimated_locY_goods = 0
+        n_goods = 0
 
-        previous_action = -1
-        for i in range(self.AGENT_N_RANDOM_TEST):
+        # we perform the search starting from several trandom positions
+        for i in range(self.N_RANDOM_TEST):
             random_loc = self.env.get_random_location()
             observation = np.concatenate((fp, random_loc))
             n_steps = 0
             done = 0
+            previous_action = -1
             while n_steps < self.MAX_STEPS_BY_EPISODE and done == 0:
                 state = self.from_observation_to_state(observation)
                 best_action = self.get_best_action(state)
                 new_observation, done = self.env.do_step_test(observation, best_action)
 
+                # done == -1 is when the observation is out of the limits
+                # In this case the valid observation is the last one before going out
                 if done != -1:
                     is_at_objective = self.check_objective(best_action, previous_action)
-                    if is_at_objective:
-                        observation[self.env.pos_x] = (observation[self.env.pos_x] + new_observation[self.env.pos_x]) / 2
+                    if is_at_objective == 1:
+                        observation[self.env.pos_x] = new_observation[self.env.pos_x]
                         observation[self.env.pos_y] = (observation[self.env.pos_y] + new_observation[self.env.pos_y]) / 2
                         done = 1
+                    elif is_at_objective == 2:
+                        observation[self.env.pos_x] = (observation[self.env.pos_x] + new_observation[self.env.pos_x]) / 2
+                        observation[self.env.pos_y] = new_observation[self.env.pos_y]
+                        done = 1
                     else:
+                        # prepare new iteration
                         observation = new_observation
+                        previous_action = best_action
                         n_steps += 1
-                    previous_action = best_action
+            #end while
 
-            acm_estimated_locX += observation[self.env.pos_x]
-            acm_estimated_locY += observation[self.env.pos_y]
+            # if the agent gone out, the observation is not taken into account as goods
+            if done != -1:
+                acm_estimated_locX_goods += observation[self.env.pos_x]
+                acm_estimated_locY_goods += observation[self.env.pos_y]
+                n_goods += 1
 
+            acm_estimated_locX_all += observation[self.env.pos_x]
+            acm_estimated_locY_all += observation[self.env.pos_y]
+        # end for
+
+        # If there are at least one good, we use the goods.
+        # If all are not goods, we use the all
         new_loc = np.zeros(2)
-        new_loc[0] = acm_estimated_locX / self.AGENT_N_RANDOM_TEST
-        new_loc[1] = acm_estimated_locY / self.AGENT_N_RANDOM_TEST
-        return new_loc
+        if n_goods > 0:
+            new_loc[0] = acm_estimated_locX_goods / n_goods
+            new_loc[1] = acm_estimated_locY_goods / n_goods
+            success = 1
+        else:
+            new_loc[0] = acm_estimated_locX_all / self.N_RANDOM_TEST
+            new_loc[1] = acm_estimated_locY_all / self.N_RANDOM_TEST
+            success = 0
+        return new_loc, success
 
     # ---------------------------------------------------------
     # ---------------------------------------------------------
     def check_objective(self, best_action, previous_action):
         if best_action == 0 and previous_action == 1 or \
-           best_action == 1 and previous_action == 0 or \
-           best_action == 2 and previous_action == 3 or \
-           best_action == 3 and previous_action == 2:
-            return True
-        return False
+           best_action == 1 and previous_action == 0:
+            # up and down
+            return 1
+        elif best_action == 2 and previous_action == 3 or \
+             best_action == 3 and previous_action == 2:
+            #left and right
+            return 2
+        return 0
 
     # ---------------------------------------------------------
     # ---------------------------------------------------------
