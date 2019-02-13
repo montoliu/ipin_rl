@@ -53,7 +53,7 @@ class IndoorLocKNN:
         estimated_locations = self.get_locations(test_fingerprints)
         v_errors = self.estimate_accuracy(estimated_locations, test_locations)
 
-        return np.mean(v_errors), np.percentile(v_errors, 75)
+        return estimated_locations, v_errors, np.mean(v_errors), np.percentile(v_errors, 75)
 
     # ---------------------------------------------------------
     # get_locations

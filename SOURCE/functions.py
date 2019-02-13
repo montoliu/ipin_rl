@@ -103,35 +103,51 @@ def normalize_xy(train, test):
 # -----------------------------------------------------------
 # -----------------------------------------------------------
 # run knn algorithm
-def ips_knn(train_data, test_data, train_loc, test_loc, k, floor_estimation, building_estimation):
+def ips_knn(train_data, test_data, train_loc, test_loc, k, conf, floor_estimation, building_estimation):
+    results_name = "../RESULTS/knn." + conf.EXPERIMENT_NAME + ".csv"
+
     indoorloc_model = IPS_knn.IndoorLocKNN(train_data, train_loc, k, floor_estimation, building_estimation)
-    mean_acc, p75_acc = indoorloc_model.get_accuracy(test_data, test_loc)
+    estimated_loc, v_error, mean_acc, p75_acc = indoorloc_model.get_accuracy(test_data, test_loc)
+
+    debug_data = np.concatenate((test_loc,
+                                 estimated_loc,
+                                 np.reshape(v_error, [len(v_error), 1])), axis=1)
+    save_data(debug_data, results_name)
+
     return mean_acc, p75_acc
 
 
 # -----------------------------------------------------------
 # -----------------------------------------------------------
 # run drl algorithm
-def ips_drl(train_data, test_data, train_loc, test_loc, do_training, do_grid_mode, training_filename, debug_system, conf):
-    indoorloc_model = IPS_drl.IndoorLocDRL(train_data, train_loc, debug_system, conf, do_training, do_grid_mode, training_filename) #Train
+def ips_drl(train_data, test_data, train_loc, test_loc, do_training, do_grid_mode, conf):
+    model_name = "../MODELS/drl." + conf.EXPERIMENT_NAME
+    results_name = "../RESULTS/drl." + conf.EXPERIMENT_NAME + ".csv"
+
+    indoorloc_model = IPS_drl.IndoorLocDRL(train_data, train_loc, conf, do_training, do_grid_mode, model_name) #Train
     estimated_loc, v_error, mean_acc, p75_acc = indoorloc_model.get_accuracy(test_data, test_loc) #Test and return accuracy
 
-    debug_data = np.concatenate((test_loc, estimated_loc, np.reshape(v_error, [len(v_error), 1])), axis=1)
-    save_data(debug_data, "../RESULTS/resultsDRL.csv")
+    debug_data = np.concatenate((test_loc,
+                                 estimated_loc,
+                                 np.reshape(v_error, [len(v_error), 1])), axis=1)
+    save_data(debug_data, results_name)
 
     return mean_acc, p75_acc
 
 # -----------------------------------------------------------
 # -----------------------------------------------------------
 # run ql algorithm
-def ips_ql(train_data, test_data, train_loc, test_loc, do_training, do_grid_mode, training_filename, conf):
-    indoorloc_model = IPS_ql.IndoorLocQL(train_data, train_loc, conf, do_training, do_grid_mode, training_filename) #Train
+def ips_ql(train_data, test_data, train_loc, test_loc, do_training, do_grid_mode, conf):
+    model_name = "../MODELS/ql." + conf.EXPERIMENT_NAME
+    results_name = "../RESULTS/ql." + conf.EXPERIMENT_NAME + ".csv"
+
+    indoorloc_model = IPS_ql.IndoorLocQL(train_data, train_loc, conf, do_training, do_grid_mode, model_name) #Train
     estimated_loc, v_error, mean_acc, p75_acc, est_results = indoorloc_model.get_accuracy(test_data, test_loc) #Test and return accuracy
 
     debug_data = np.concatenate((test_loc,
                                  estimated_loc,
                                  np.reshape(v_error, [len(v_error), 1]),
                                  np.reshape(est_results, [len(est_results), 1])), axis=1)
-    save_data(debug_data, "../RESULTS/resultsQL.csv")
+    save_data(debug_data, results_name)
 
     return mean_acc, p75_acc, np.sum(est_results) / len(est_results)

@@ -49,7 +49,6 @@ class IndoorLocQL:
         print("There are " + str(episodes.shape[0]) + " episodes for training.")
 
         for i in range(self.AGENT_N_EPOCHS):
-            print("Training epoch: " + str(i) + " ... ", end="")
             self.agent.ith_train(i, episodes, episodes_real_loc)
 
     # ---------------------------------------------------------

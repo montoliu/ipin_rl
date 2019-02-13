@@ -51,6 +51,9 @@ class ql_agent:
         mean_acm_reward_epoch = 0
         mean_acm_success_epoch = 0
 
+        n_episodes = episodes.shape[0]
+        n_debug = 0 #np.ceil(n_episodes / 20)
+
         for ep in episodes:
             n_steps, acm_reward, last_obs, done = self.run_episode(ep, real_locations[i, ])
 
@@ -62,12 +65,19 @@ class ql_agent:
             mean_acm_reward += acm_reward
             mean_acm_reward_epoch += acm_reward
 
-            if i % 10000 == 0:
-                print(str(i) + " --> " + str(mean_acm_reward/10000) + " " + str(mean_acm_success) + " " + str(len(self.Q)))
-                mean_acm_reward = 0
-                mean_acm_success = 0
+            if n_debug > 0:
+                if i % n_debug == 0:
+                    print("--> " +
+                          "{: 3.0f}".format(100*i/n_episodes) + " "
+                          "{: 7.2f}".format(mean_acm_reward/n_debug) + " " +
+                          "{: 6.1f}".format(100*mean_acm_success/n_debug) + " " + str(len(self.Q)))
+                    mean_acm_reward = 0
+                    mean_acm_success = 0
 
-        print("{:0.2f}".format(float(mean_acm_reward_epoch) / episodes.shape[0]) + " " + str(mean_acm_success_epoch) + " " + str(len(self.Q)))
+        print("### " +
+              "{: 7.2f}".format(float(mean_acm_reward_epoch) / episodes.shape[0]) + " " +
+              "{: 6.1f}".format(100*mean_acm_success_epoch/episodes.shape[0]) + " " +
+              str(len(self.Q)))
 
     # ---------------------------------------------------------
     # ---------------------------------------------------------

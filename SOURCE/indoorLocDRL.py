@@ -21,10 +21,13 @@ class IndoorLocDRL:
         self.n_training_samples = train_fingerprints.shape[0]
         self.n_aps = train_fingerprints.shape[1]
         self.N_EPISODES_PER_FP = conf.ENV_N_EPISODES_PER_FP
+
+        # create environment and agent
         self.env = ENV.envivonment(self.n_aps, self.train_locations, conf)
         self.agent = AG.drl_agent(self.env, conf)
         self.training_filename = training_filename
         self.grid_mode = do_grid_mode
+        self.AGENT_N_EPOCHS = conf.AGENT_N_EPOCHS
 
         if do_training:
             self.train()
@@ -36,58 +39,10 @@ class IndoorLocDRL:
     # ---------------------------------------------------------
     def train(self):
         if self.grid_mode:
-            episodes, episodes_real_loc = self.generate_episodes_grid(self.train_fingerprints, self.train_locations)
+            episodes, episodes_real_loc = self.env.generate_episodes_grid(self.train_fingerprints, self.train_locations)
         else:
-            episodes, episodes_real_loc = self.generate_episodes_random(self.train_fingerprints, self.train_locations)
+            episodes, episodes_real_loc = self.env.generate_episodes_random(self.train_fingerprints, self.train_locations)
         self.agent.train(episodes, episodes_real_loc)
-
-    # ---------------------------------------------------------
-    # ---------------------------------------------------------
-    def generate_episodes_grid(self, fps, real_loc):
-        n_episodes_per_fp = self.env.grid_x.shape[0] * self.env.grid_y.shape[0]
-
-        episodes = np.zeros((fps.shape[0] * n_episodes_per_fp, fps.shape[1] + 2))
-        episodes_real_locations = np.zeros((fps.shape[0] * n_episodes_per_fp, 2))
-
-        i = 0
-        j = 0
-        for fp in fps:
-            for x in self.env.grid_x:
-                for y in self.env.grid_y:
-                    new_loc = np.array([x, y])
-                    episodes[i,] = np.concatenate((fp, new_loc))
-                    episodes_real_locations[i,] = real_loc[j,]
-                    i += 1
-            j += 1
-
-        return episodes, episodes_real_locations
-
-    # ---------------------------------------------------------
-    # ---------------------------------------------------------
-    # From each FP generate several episodes
-    def generate_episodes_random(self, fps, real_loc):
-        episodes = np.zeros((fps.shape[0]*self.N_EPISODES_PER_FP, fps.shape[1]+2))
-        episodes_real_locations = np.zeros((fps.shape[0]*self.N_EPISODES_PER_FP, 2))
-
-        i = 0
-        j = 0
-        for fp in fps:
-            for e in range(self.N_EPISODES_PER_FP):
-                random_loc = self.env.get_random_location()
-                episodes[i,] = np.concatenate((fp, random_loc))
-                episodes_real_locations[i, ] = real_loc[j, ]
-                i += 1
-            j += 1
-
-        return episodes, episodes_real_locations
-
-    # ---------------------------------------------------------
-    # distance_space2D
-    # ---------------------------------------------------------
-    # Euclidean distance between two points
-    # ---------------------------------------------------------
-    def distance_space2D(self, p1, p2):
-        return math.sqrt((p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2)
 
     # ---------------------------------------------------------
     # estimate_accuracy
@@ -98,7 +53,7 @@ class IndoorLocDRL:
         n_samples = estimated_locations.shape[0]
         v_errors = np.zeros(n_samples)
         for i in range(n_samples):
-            v_errors[i] = self.distance_space2D(estimated_locations[i, :], true_locations[i, :])
+            v_errors[i] = self.env.get_distance(estimated_locations[i, :], true_locations[i, :])
 
         return v_errors
 

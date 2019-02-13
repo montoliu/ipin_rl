@@ -50,32 +50,12 @@ class drl_agent:
 
         for ep in episodes:
             n_steps, acm_reward, last_obs, done = self.run_episode(ep, real_locations[i, ])
-
-            if done == 1:
-                str_done = "Success"
-            elif done == -1:
-                str_done = "Fail"
-            else:
-                str_done = "Unfinished"
-
             i += 1
             mean_acm_reward += acm_reward
-            if i % 500 == 0:
-                print(str(i) + " --> " + str(mean_acm_reward))
+
+            if i % 10000 == 0:
+                print(str(i) + " --> " + str(mean_acm_reward / 10000))
                 mean_acm_reward = 0
-
-
-    # ---------------------------------------------------------
-    # ---------------------------------------------------------
-    def select_action(self, state):
-        sample = random.random()
-        eps_threshold = 0.5
-        if sample > eps_threshold:
-            state = np.reshape(state, [1, self.NN_INPUT])
-            act_values = self.model.predict(state)
-            return np.argmax(act_values[0])
-        else:
-            return random.randrange(self.NN_OUTPUT)
 
     # ---------------------------------------------------------
     # ---------------------------------------------------------
@@ -83,19 +63,19 @@ class drl_agent:
         observation = episode
         n_step = 1
         acm_reward = 0
-        while n_step < self.MAX_STEPS_BY_EPISODE:
+        done = 0
+        while n_step < self.MAX_STEPS_BY_EPISODE and done == 0:
             observation_norm = self.normalize_observation(observation)
             action = self.select_action(observation_norm)
             next_observation, reward, done = self.env.do_step(observation, action, real_location)
-            acm_reward += reward
-            if done != 0:
-                return n_step, acm_reward, next_observation, done
-
             next_observation_norm = self.normalize_observation(observation)
+            acm_reward += reward
+
             self.memory.push((observation_norm, action, next_observation_norm, reward, done))
             self.learn()
             observation = next_observation
             n_step += 1
+
         return n_step, acm_reward, next_observation, 0
 
     # ---------------------------------------------------------
@@ -120,8 +100,23 @@ class drl_agent:
         history = self.model.fit(batch_state, targets_f, epochs=3, verbose=0)
         self.n_learn_done += 1
 
+
     # ---------------------------------------------------------
     # ---------------------------------------------------------
+    # TODO como cambiar eps_threshold
+    def select_action(self, state):
+        sample = random.random()
+        eps_threshold = 0.5
+        if sample > eps_threshold:
+            state = np.reshape(state, [1, self.NN_INPUT])
+            act_values = self.model.predict(state)
+            return np.argmax(act_values[0])
+        else:
+            return random.randrange(self.NN_OUTPUT)
+
+    # ---------------------------------------------------------
+    # ---------------------------------------------------------
+    # TODO pensa rnuevo test
     def test(self, fp):
         random_loc = self.env.get_random_location()
         observation = np.concatenate((fp, random_loc))

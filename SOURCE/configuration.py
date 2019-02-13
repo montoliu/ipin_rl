@@ -41,13 +41,25 @@ class configuration:
     def __init__(self):
         self.DO_SETS = False
         self.DO_GRID_MODE = True
-        self.DO_ONLY_GOOG_APS = True
 
         self.DO_KNN = True
+
         self.DO_DRL = False
         self.DO_DRL_TRAINING = False
+
         self.DO_QL = True
-        self.DO_QL_TRAINING = False
+        self.DO_QL_TRAINING = True
+
+        self.DO_ONLY_GOOG_APS = False
+        self.TH_PCT_GOOD_AP = 0.3
+        self.TH_RSSI_GOOD = -60
+        self.KNN_K = 3
+
+        #self.DATABASE = "../DATA/mini.csv"
+        self.DATABASE = "../DATA/juguete.csv"
+        #self.DATABASE = "../DATA/IPIN16.csv"
+
+        self.EXPERIMENT_NAME = "juguete"
 
         self.ENV_N_EPISODES_PER_FP = 9
         self.ENV_STEP = 0.5
@@ -60,9 +72,9 @@ class configuration:
 
         self.AGENT_MEM_MAX_CAPACITY = 1000
         self.AGENT_LEARNING_RATE = 0.001
-        self.AGENT_NN_INPUT = 170           # N_WAPS + 2
+        self.AGENT_NN_INPUT = 6           # N_WAPS + 2
         self.AGENT_NN_HIDDEN = 128
-        self.AGENT_NN_OUTPUT = 5
+        self.AGENT_NN_OUTPUT = 4
         self.AGENT_BATCH_SIZE = 100
         self.AGENT_MAX_STEPS_BY_EPISODE = 100
         self.AGENT_EPS_START = 0.9  # e-greedy threshold start value
@@ -74,14 +86,4 @@ class configuration:
         self.AGENT_N_EPOCHS = 5
         self.AGENT_N_RANDOM_TEST = 5
 
-        self.TH_PCT_GOOD_AP = 0.3
-        self.TH_RSSI_GOOD = -60
-        self.KNN_K = 3
 
-        #self.DATABASE = "../DATA/mini.csv"
-
-        #self.TRAINING_FILENAME = "../MODELS/ml.model"
-        #self.DATABASE = "../DATA/juguete.csv"
-
-        self.TRAINING_FILENAME = "../MODELS/ml.IPIN16"
-        self.DATABASE = "../DATA/IPIN16.csv"
