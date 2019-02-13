@@ -4,24 +4,16 @@
     <list default="true" id="595533d5-afab-4a16-a823-ffa4e9028cf1" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/MODELS/ml.IPIN16.npy" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/MODELS/ml.model.npy" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change beforePath="$PROJECT_DIR$/RESULTS/resultsQL.csv" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/DATA/juguete.csv" afterPath="$PROJECT_DIR$/DATA/juguete.csv" />
+      <change beforePath="$PROJECT_DIR$/MODELS/ql.juguete.npy" afterPath="$PROJECT_DIR$/MODELS/ql.juguete.npy" />
+      <change beforePath="$PROJECT_DIR$/RESULTS/knn.juguete.csv" afterPath="$PROJECT_DIR$/RESULTS/knn.juguete.csv" />
+      <change beforePath="$PROJECT_DIR$/RESULTS/ql.juguete.csv" afterPath="$PROJECT_DIR$/RESULTS/ql.juguete.csv" />
       <change beforePath="$PROJECT_DIR$/SOURCE/configuration.py" afterPath="$PROJECT_DIR$/SOURCE/configuration.py" />
-      <change beforePath="$PROJECT_DIR$/SOURCE/drl_agent.py" afterPath="$PROJECT_DIR$/SOURCE/drl_agent.py" />
       <change beforePath="$PROJECT_DIR$/SOURCE/functions.py" afterPath="$PROJECT_DIR$/SOURCE/functions.py" />
-      <change beforePath="$PROJECT_DIR$/SOURCE/indoorLocDRL.py" afterPath="$PROJECT_DIR$/SOURCE/indoorLocDRL.py" />
-      <change beforePath="$PROJECT_DIR$/SOURCE/indoorLocKNN.py" afterPath="$PROJECT_DIR$/SOURCE/indoorLocKNN.py" />
-      <change beforePath="$PROJECT_DIR$/SOURCE/indoorLocQL.py" afterPath="$PROJECT_DIR$/SOURCE/indoorLocQL.py" />
       <change beforePath="$PROJECT_DIR$/SOURCE/main.py" afterPath="$PROJECT_DIR$/SOURCE/main.py" />
       <change beforePath="$PROJECT_DIR$/SOURCE/ql_agent.py" afterPath="$PROJECT_DIR$/SOURCE/ql_agent.py" />
-      <change beforePath="$PROJECT_DIR$/TMP/x_test.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/TMP/x_test_good.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/TMP/x_train.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/TMP/x_train_good.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/TMP/y_test.csv" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/TMP/y_train.csv" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/TMP/juguete.x_test.csv" afterPath="$PROJECT_DIR$/TMP/juguete.x_test.csv" />
+      <change beforePath="$PROJECT_DIR$/TMP/juguete.x_train.csv" afterPath="$PROJECT_DIR$/TMP/juguete.x_train.csv" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -33,18 +25,18 @@
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/RL$MAC.coverage" NAME="MAC Coverage Results" MODIFIED="1549887910085" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/SOURCE/" />
     <SUITE FILE_PATH="coverage/RL$main.coverage" NAME="main Coverage Results" MODIFIED="1544686593021" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/SOURCE" />
-    <SUITE FILE_PATH="coverage/ipin_rl$MAC.coverage" NAME="MAC Coverage Results" MODIFIED="1550061473615" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/SOURCE/" />
+    <SUITE FILE_PATH="coverage/ipin_rl$MAC.coverage" NAME="MAC Coverage Results" MODIFIED="1550071850333" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/SOURCE/" />
   </component>
   <component name="FavoritesManager">
     <favorites_list name="RL" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="configuration.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="configuration.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/SOURCE/configuration.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="124">
-              <caret line="41" column="28" lean-forward="false" selection-start-line="41" selection-start-column="28" selection-end-line="41" selection-end-column="28" />
+            <state relative-caret-position="331">
+              <caret line="59" column="31" lean-forward="false" selection-start-line="59" selection-start-column="31" selection-end-line="59" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -53,8 +45,8 @@
       <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SOURCE/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="93" column="39" lean-forward="false" selection-start-line="93" selection-start-column="39" selection-end-line="93" selection-end-column="39" />
+            <state relative-caret-position="556">
+              <caret line="97" column="0" lean-forward="false" selection-start-line="97" selection-start-column="0" selection-end-line="97" selection-end-column="0" />
               <folding>
                 <element signature="e#0#30#0" expanded="true" />
               </folding>
@@ -65,8 +57,8 @@
       <file leaf-file-name="functions.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SOURCE/functions.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="614">
-              <caret line="141" column="34" lean-forward="false" selection-start-line="141" selection-start-column="34" selection-end-line="141" selection-end-column="34" />
+            <state relative-caret-position="287">
+              <caret line="153" column="0" lean-forward="false" selection-start-line="153" selection-start-column="0" selection-end-line="153" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -82,11 +74,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="indoorLocQL.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="indoorLocQL.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SOURCE/indoorLocQL.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="199">
-              <caret line="51" column="24" lean-forward="true" selection-start-line="51" selection-start-column="24" selection-end-line="51" selection-end-column="24" />
+            <state relative-caret-position="658">
+              <caret line="74" column="92" lean-forward="false" selection-start-line="74" selection-start-column="65" selection-end-line="74" selection-end-column="92" />
               <folding />
             </state>
           </provider>
@@ -105,8 +97,8 @@
       <file leaf-file-name="ql_agent.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SOURCE/ql_agent.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="381">
-              <caret line="76" column="22" lean-forward="false" selection-start-line="76" selection-start-column="22" selection-end-line="76" selection-end-column="22" />
+            <state relative-caret-position="161">
+              <caret line="34" column="36" lean-forward="false" selection-start-line="34" selection-start-column="36" selection-end-line="34" selection-end-column="36" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -157,11 +149,11 @@
         <option value="$PROJECT_DIR$/SOURCE/drl_agent.py" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/SOURCE/indoorLocKNN.py" />
-        <option value="$PROJECT_DIR$/SOURCE/functions.py" />
-        <option value="$PROJECT_DIR$/SOURCE/configuration.py" />
-        <option value="$PROJECT_DIR$/SOURCE/main.py" />
-        <option value="$PROJECT_DIR$/SOURCE/ql_agent.py" />
         <option value="$PROJECT_DIR$/SOURCE/indoorLocQL.py" />
+        <option value="$PROJECT_DIR$/SOURCE/main.py" />
+        <option value="$PROJECT_DIR$/SOURCE/functions.py" />
+        <option value="$PROJECT_DIR$/SOURCE/ql_agent.py" />
+        <option value="$PROJECT_DIR$/SOURCE/configuration.py" />
       </list>
     </option>
   </component>
@@ -332,9 +324,9 @@
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32719395" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23451911" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.45322794" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2621871" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15678525" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290653" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14520743" sideWeight="0.4923664" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -361,6 +353,13 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/SOURCE/functions.py</url>
+          <line>145</line>
+          <option name="timeStamp" value="167" />
+        </line-breakpoint>
+      </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">
@@ -368,7 +367,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="163" />
+      <option name="time" value="168" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
@@ -378,58 +377,62 @@
         <watch expression="observation_norm[5]" language="Python" />
         <watch expression="next_observation[4]" language="Python" />
         <watch expression="next_observation[5]" language="Python" />
+        <watch expression="self.Q[&quot;011105010&quot;]" language="Python" />
+        <watch expression="self.Q[&quot;011105011&quot;]" language="Python" />
+        <watch expression="self.Q[&quot;011105012&quot;]" language="Python" />
+        <watch expression="self.Q[&quot;011105013&quot;]" language="Python" />
       </configuration>
     </watches-manager>
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="watch">
       <expression>
-        <expression-string>next_observation[5]</expression-string>
+        <expression-string>self.Q[&quot;011105013&quot;]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>next_observation[4]</expression-string>
+        <expression-string>self.Q[&quot;011105012&quot;]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>observation_norm[5]</expression-string>
+        <expression-string>self.Q[&quot;011105011&quot;]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>observation_norm[4]</expression-string>
+        <expression-string>self.Q[&quot;011105010&quot;]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>observation[5]</expression-string>
+        <expression-string>self.Q[&quot;011105003&quot;]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>observation[4]</expression-string>
+        <expression-string>self.Q[&quot;011105002&quot;]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>self.Q[&quot;1111001107193&quot;]</expression-string>
+        <expression-string>self.Q[&quot;011105001&quot;]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>self.Q[&quot;1111001107192&quot;]</expression-string>
+        <expression-string>self.Q[&quot;011105000&quot;]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>self.Q[&quot;1111001107191&quot;]</expression-string>
+        <expression-string>self.Q[&quot;101001003&quot;]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>self.Q[&quot;1111001107190&quot;]</expression-string>
+        <expression-string>self.Q[&quot;1010001003&quot;]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
@@ -782,46 +785,46 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SOURCE/functions.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="614">
-          <caret line="141" column="34" lean-forward="false" selection-start-line="141" selection-start-column="34" selection-end-line="141" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SOURCE/configuration.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="124">
-          <caret line="41" column="28" lean-forward="false" selection-start-line="41" selection-start-column="28" selection-end-line="41" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/SOURCE/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="93" column="39" lean-forward="false" selection-start-line="93" selection-start-column="39" selection-end-line="93" selection-end-column="39" />
+        <state relative-caret-position="556">
+          <caret line="97" column="0" lean-forward="false" selection-start-line="97" selection-start-column="0" selection-end-line="97" selection-end-column="0" />
           <folding>
             <element signature="e#0#30#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/SOURCE/functions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="287">
+          <caret line="153" column="0" lean-forward="false" selection-start-line="153" selection-start-column="0" selection-end-line="153" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SOURCE/indoorLocQL.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="658">
+          <caret line="74" column="92" lean-forward="false" selection-start-line="74" selection-start-column="65" selection-end-line="74" selection-end-column="92" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/SOURCE/ql_agent.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="381">
-          <caret line="76" column="22" lean-forward="false" selection-start-line="76" selection-start-column="22" selection-end-line="76" selection-end-column="22" />
+        <state relative-caret-position="161">
+          <caret line="34" column="36" lean-forward="false" selection-start-line="34" selection-start-column="36" selection-end-line="34" selection-end-column="36" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SOURCE/indoorLocQL.py">
+    <entry file="file://$PROJECT_DIR$/SOURCE/configuration.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="199">
-          <caret line="51" column="24" lean-forward="true" selection-start-line="51" selection-start-column="24" selection-end-line="51" selection-end-column="24" />
+        <state relative-caret-position="331">
+          <caret line="59" column="31" lean-forward="false" selection-start-line="59" selection-start-column="31" selection-end-line="59" selection-end-column="31" />
           <folding />
         </state>
       </provider>

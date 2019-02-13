@@ -143,6 +143,7 @@ def ips_ql(train_data, test_data, train_loc, test_loc, do_training, do_grid_mode
 
     indoorloc_model = IPS_ql.IndoorLocQL(train_data, train_loc, conf, do_training, do_grid_mode, model_name) #Train
     estimated_loc, v_error, mean_acc, p75_acc, est_results = indoorloc_model.get_accuracy(test_data, test_loc) #Test and return accuracy
+    v_error_goods = v_error[np.array(est_results, dtype=bool)]
 
     debug_data = np.concatenate((test_loc,
                                  estimated_loc,
@@ -150,4 +151,5 @@ def ips_ql(train_data, test_data, train_loc, test_loc, do_training, do_grid_mode
                                  np.reshape(est_results, [len(est_results), 1])), axis=1)
     save_data(debug_data, results_name)
 
-    return mean_acc, p75_acc, np.sum(est_results) / len(est_results)
+    return mean_acc, p75_acc, np.sum(est_results) / len(est_results), np.mean(v_error_goods), np.percentile(v_error_goods, 75)
+

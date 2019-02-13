@@ -10,6 +10,7 @@ class ql_agent:
         self.GAMMA = conf.AGENT_GAMMA
         self.N_ACTIONS = conf.AGENT_N_ACTIONS
         self.RSSI_TH = conf.ENV_RSSI_TH
+        self.N_EPOCHS = conf.AGENT_N_EPOCHS
 
         self.env = env
         self.steps_done = 0
@@ -30,15 +31,9 @@ class ql_agent:
     # ---------------------------------------------------------
     # ---------------------------------------------------------
     def ith_train(self, i_epoch, episodes, real_locations):
-        if i_epoch == 0:
-            self.EPS = 0.8
-        elif i_epoch == 1:
-            self.EPS = 0.6
-        elif i_epoch == 2:
-            self.EPS = 0.4
-        elif i_epoch == 3:
-            self.EPS = 0.2
-        elif i_epoch == 4:
+        step = 1 / self.N_EPOCHS
+        self.EPS = 0.9 - (i_epoch * step)
+        if self.EPS < 0.1:
             self.EPS = 0.1
         self.train(episodes, real_locations)
 

@@ -42,24 +42,29 @@ class configuration:
         self.DO_SETS = False
         self.DO_GRID_MODE = True
 
-        self.DO_KNN = True
+        self.DO_ONLY_GOOG_APS = False
+        self.TH_PCT_GOOD_AP = 0.3
+        self.TH_RSSI_GOOD = -60
+
+        self.DO_KNN = False
+        self.KNN_K = 3
 
         self.DO_DRL = False
         self.DO_DRL_TRAINING = False
 
         self.DO_QL = True
         self.DO_QL_TRAINING = True
-
-        self.DO_ONLY_GOOG_APS = False
-        self.TH_PCT_GOOD_AP = 0.3
-        self.TH_RSSI_GOOD = -60
-        self.KNN_K = 3
+        self.ENV_RSSI_TH = 0.5
+        self.ENV_GRID_CELL_SIZE = 0.5
+        self.AGENT_N_RANDOM_TEST = 5
+        self.AGENT_N_EPOCHS = 5
 
         #self.DATABASE = "../DATA/mini.csv"
-        self.DATABASE = "../DATA/juguete.csv"
+        #self.DATABASE = "../DATA/juguete.csv"
+        self.DATABASE = "../DATA/juguete_dif.csv"
         #self.DATABASE = "../DATA/IPIN16.csv"
 
-        self.EXPERIMENT_NAME = "juguete"
+        self.EXPERIMENT_NAME = "juguete_dif"
 
         self.ENV_N_EPISODES_PER_FP = 9
         self.ENV_STEP = 0.5
@@ -67,8 +72,7 @@ class configuration:
         self.ENV_BIG_REWARD = 100
         self.ENV_SMALL_REWARD = 1
         self.ENV_MARGIN = 0.5
-        self.ENV_GRID_CELL_SIZE = 0.5
-        self.ENV_RSSI_TH = 0.3
+
 
         self.AGENT_MEM_MAX_CAPACITY = 1000
         self.AGENT_LEARNING_RATE = 0.001
@@ -77,13 +81,8 @@ class configuration:
         self.AGENT_NN_OUTPUT = 4
         self.AGENT_BATCH_SIZE = 100
         self.AGENT_MAX_STEPS_BY_EPISODE = 100
-        self.AGENT_EPS_START = 0.9  # e-greedy threshold start value
-        self.AGENT_EPS_END = 0.01   # e-greedy threshold end value
-        self.AGENT_EPS_DECAY = 200  # e-greedy threshold decay
         self.AGENT_GAMMA = 0.8      # Q-learning discount factor
         self.AGENT_ALPHA = 0.8
         self.AGENT_N_ACTIONS = 4
-        self.AGENT_N_EPOCHS = 5
-        self.AGENT_N_RANDOM_TEST = 5
 
 
