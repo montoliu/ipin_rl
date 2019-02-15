@@ -3,7 +3,7 @@ import numpy as np
 import random
 
 
-class envivonment:
+class Envivonment:
     def __init__(self, n_aps, locations, conf):
         self.n_aps = n_aps
         self.min_x = np.min(locations[:, 0])
@@ -11,15 +11,15 @@ class envivonment:
         self.min_y = np.min(locations[:, 1])
         self.max_y = np.max(locations[:, 1])
 
-        self.STEP = conf.ENV_STEP
-        self.TH_CLOSE = conf.ENV_TH_CLOSE
-        self.BIG_REWARD = conf.ENV_BIG_REWARD
-        self.SMALL_REWARD = conf.ENV_SMALL_REWARD
-        self.MARGIN = conf.ENV_MARGIN
+        self.STEP = conf.get_env_step()
+        self.TH_CLOSE = conf.get_env_th_close()
+        self.BIG_REWARD = conf.get_env_big_reward()
+        self.SMALL_REWARD = conf.get_env_small_reward()
+        self.MARGIN = conf.get_env_margin()
         self.GRID_N_CELLS_X = 0
         self.GRID_N_CELLS_Y = 0
 
-        self.GRID_CELL_SIZE = conf.ENV_GRID_CELL_SIZE
+        self.GRID_CELL_SIZE = conf.get_grid_cell_size()
         self.grid_x, self.grid_y = self.get_grid()
 
         self.pos_x = n_aps

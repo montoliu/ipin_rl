@@ -1,5 +1,5 @@
-import SOURCE.ql_agent as AG
-import SOURCE.environment as ENV
+import SOURCE.QlAgent as Ag
+import SOURCE.Environment as Env
 import numpy as np
 
 
@@ -20,14 +20,14 @@ class IndoorLocQL:
         self.train_locations = train_locations
         self.n_training_samples = train_fingerprints.shape[0]
         self.n_aps = train_fingerprints.shape[1]
-        self.N_EPISODES_PER_FP = conf.ENV_N_EPISODES_PER_FP
+        self.N_EPISODES_PER_FP = conf.get_env_n_episodes_per_fp()
 
         # create environment and agent
-        self.env = ENV.envivonment(self.n_aps, self.train_locations, conf)
-        self.agent = AG.ql_agent(self.env, conf)
+        self.env = Env.Envivonment(self.n_aps, self.train_locations, conf)
+        self.agent = Ag.QlAgent(self.env, conf)
         self.training_filename = training_filename
         self.grid_mode = do_grid_mode
-        self.AGENT_N_EPOCHS = conf.AGENT_N_EPOCHS
+        self.AGENT_N_EPOCHS = conf.get_ql_n_epochs()
 
         if do_training:
             self.train()

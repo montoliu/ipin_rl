@@ -2,23 +2,19 @@ import numpy as np
 import random
 
 
-class ql_agent:
+class QlAgent:
     def __init__(self, env, conf):
-        self.ALPHA = conf.AGENT_ALPHA
-        self.MAX_STEPS_BY_EPISODE = conf.AGENT_MAX_STEPS_BY_EPISODE
-        self.EPS = 0.5
-        self.GAMMA = conf.AGENT_GAMMA
-        self.N_ACTIONS = conf.AGENT_N_ACTIONS
-        self.RSSI_TH = conf.ENV_RSSI_TH
-        self.N_EPOCHS = conf.AGENT_N_EPOCHS
-
+        self.ALPHA = conf.get_ql_alpha()
+        self.GAMMA = conf.get_ql_gamma()
+        self.MAX_STEPS_BY_EPISODE = conf.get_ql_max_steps_by_episode()
+        self.N_ACTIONS = conf.get_env_n_actions()
+        self.RSSI_TH = conf.get_ql_rssi_th()
+        self.N_EPOCHS = conf.get_ql_n_epochs()
+        self.N_RANDOM_TEST = conf.get_ql_n_random_test()
         self.env = env
-        self.steps_done = 0
-        self.N_RANDOM_TEST = conf.AGENT_N_RANDOM_TEST
-
         self.Q = dict()
 
-     # ---------------------------------------------------------
+    # ---------------------------------------------------------
     # ---------------------------------------------------------
     def save_to_disk(self, filename):
         np.save(filename, self.Q)
@@ -107,7 +103,6 @@ class ql_agent:
     def select_action(self, observation):
         sample = random.random()
         eps_threshold = self.EPS
-        self.steps_done += 1
         if sample > eps_threshold:
             state = self.from_observation_to_state(observation)
             return self.get_best_action(state)
@@ -247,7 +242,7 @@ class ql_agent:
     def actualize_q_values(self, state, next_state, action, reward):
         max_st1 = self.get_max_q_value(next_state)
         q_value_st = self.get_q_value(state, action)
-        q_value_st = q_value_st + self.ALPHA * (reward + self.GAMMA*max_st1 - q_value_st)
+        q_value_st = q_value_st + self.ALPHA * (reward + self.GAMMA * max_st1 - q_value_st)
         self.set_q_value(state, action, q_value_st)
 
     # ---------------------------------------------------------

@@ -1,5 +1,5 @@
 import SOURCE.drl_agent as AG
-import SOURCE.environment as ENV
+import SOURCE.Environment as ENV
 import numpy as np
 import math
 
