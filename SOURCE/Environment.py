@@ -13,8 +13,10 @@ class Envivonment:
 
         self.STEP = conf.get_env_step()
         self.TH_CLOSE = conf.get_env_th_close()
-        self.BIG_REWARD = conf.get_env_big_reward()
-        self.SMALL_REWARD = conf.get_env_small_reward()
+        self.BIG_POSITIVE_REWARD = conf.get_env_big_positive_reward()
+        self.BIG_NEGATIVE_REWARD = conf.get_env_big_negative_reward()
+        self.SMALL_POSITIVE_REWARD = conf.get_env_small_positive_reward()
+        self.SMALL_NEGATIVE_REWARD = conf.get_env_small_negative_reward()
         self.MARGIN = conf.get_env_margin()
         self.GRID_N_CELLS_X = 0
         self.GRID_N_CELLS_Y = 0
@@ -80,17 +82,17 @@ class Envivonment:
 
         if self.is_outside(new_loc):
             done = -1
-            reward = -self.BIG_REWARD
+            reward = self.BIG_NEGATIVE_REWARD
         elif self.is_close(real_loc, new_loc):
             done = 1
-            reward = self.BIG_REWARD
+            reward = self.BIG_POSITIVE_REWARD
         else:
             d_actual = self.get_distance(loc, real_loc)
             d_new = self.get_distance(new_loc, real_loc)
             if d_new < d_actual:
-                reward = self.SMALL_REWARD
+                reward = self.SMALL_POSITIVE_REWARD
             else:
-                reward = -self.SMALL_REWARD
+                reward = self.SMALL_NEGATIVE_REWARD
             done = 0
 
         new_observation = np.concatenate((fp, new_loc))

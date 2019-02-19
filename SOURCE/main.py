@@ -2,12 +2,17 @@ import sys
 import SOURCE.functions as myf
 import SOURCE.Configuration as config
 from sklearn.model_selection import train_test_split
-
+import numpy as np
+import random
 # -----------------------------------------------------------
 # MAIN
 # -----------------------------------------------------------
 # argv[1] configuration filename
 if __name__ == "__main__":
+
+    random.seed(0)
+    np.random.seed(0)
+
     print("Configuratio file: " + sys.argv[1])
     conf = config.Configuration(sys.argv[1])
 

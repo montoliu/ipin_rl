@@ -43,7 +43,7 @@ class QlAgent:
         mean_acm_success_epoch = 0
 
         n_episodes = episodes.shape[0]
-        n_debug = 0 #np.ceil(n_episodes / 20)
+        n_debug = np.ceil(n_episodes / 50)
 
         for ep in episodes:
             n_steps, acm_reward, last_obs, done = self.run_episode(ep, real_locations[i, ])

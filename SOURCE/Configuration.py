@@ -64,8 +64,11 @@ class Configuration:
         self.conf["ENV_N_EPISODES_PER_FP"] = 9
         self.conf["ENV_STEP"] = 0.5
         self.conf["ENV_TH_CLOSE"] = 1
-        self.conf["ENV_BIG_REWARD"] = 100
-        self.conf["ENV_SMALL_REWARD"] = 1
+        self.conf["ENV_BIG_POSITIVE_REWARD"] = 100
+        self.conf["ENV_BIG_NEGATIVE_REWARD"] = -100
+        self.conf["ENV_SMALL_POSITIVE_REWARD"] = 1
+        self.conf["ENV_SMALL_NEGATIVE_REWARD"] = -1
+
         self.conf["ENV_MARGIN"] = 0.5
         self.conf["ENV_N_ACTIONS"] = 4
 
@@ -146,11 +149,17 @@ class Configuration:
     def get_env_th_close(self):
         return self.conf["ENV_TH_CLOSE"]
 
-    def get_env_big_reward(self):
-        return self.conf["ENV_BIG_REWARD"]
+    def get_env_big_positive_reward(self):
+        return self.conf["ENV_BIG_POSITIVE_REWARD"]
 
-    def get_env_small_reward(self):
-        return self.conf["ENV_SMALL_REWARD"]
+    def get_env_big_negative_reward(self):
+        return self.conf["ENV_BIG_NEGATIVE_REWARD"]
+
+    def get_env_small_positive_reward(self):
+        return self.conf["ENV_SMALL_POSITIVE_REWARD"]
+
+    def get_env_small_negative_reward(self):
+        return self.conf["ENV_SMALL_NEGATIVE_REWARD"]
 
     def get_env_margin(self):
         return self.conf["ENV_MARGIN"]

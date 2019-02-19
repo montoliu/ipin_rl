@@ -3,3 +3,7 @@
 *.pyc
 .idea/
 __pycache__/
+MODELS/
+TMP/
+CONF/
+RESULTS/
