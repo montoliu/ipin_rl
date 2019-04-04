@@ -30,6 +30,14 @@ class Envivonment:
 
     # ---------------------------------------------------------
     # ---------------------------------------------------------
+    def get_n_aps(self):
+        return self.n_aps
+
+    def get_n_actions(self):
+        return 4
+
+    # ---------------------------------------------------------
+    # ---------------------------------------------------------
     # The first is the minimum
     # The last is the maximum
     def get_grid(self):
@@ -144,6 +152,7 @@ class Envivonment:
         if d < self.TH_CLOSE:
             return True
         return False
+
     # ---------------------------------------------------------
     # ---------------------------------------------------------
     def normalize_loc(self, loc):

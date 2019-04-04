@@ -10,10 +10,10 @@ import random
 # argv[1] configuration filename
 if __name__ == "__main__":
 
-    random.seed(0)
-    np.random.seed(0)
+    #random.seed(0)
+    #np.random.seed(0)
 
-    print("Configuratio file: " + sys.argv[1])
+    print("Configuration file: " + sys.argv[1])
     conf = config.Configuration(sys.argv[1])
 
     if not conf.is_correct():
@@ -87,7 +87,7 @@ if __name__ == "__main__":
         print("\n--------------------- ")
         print("--- QL  Algorithm --- ")
         print("--------------------- ")
-        ql_p50, ql_p75, ql_pct, ql_goods50, ql_goods75= myf.ips_ql(x_train, x_test, y_train, y_test,
+        ql_p50, ql_p75, ql_pct, ql_goods50, ql_goods75 = myf.ips_ql(x_train, x_test, y_train, y_test,
                                                                    conf.get_ql_do_training(), conf.get_use_grid_mode(), conf)
         print("--------------------- ")
         print("Mean: " + "{:0.2f}".format(ql_p50) + " " + "{:0.2f}".format(ql_goods50) +
@@ -95,15 +95,17 @@ if __name__ == "__main__":
               ", Pct " + "{:0.2f}".format(ql_pct))
         print("--------------------- ")
 
-    # if conf.get_do_drl():
-    #     print("\n--------------------- ")
-    #     print("--- DRL Algorithm --- ")
-    #     print("--------------------- ")
-    #     drl_p50, drl_p75 = myf.ips_drl(x_train, x_test, y_train, y_test, conf.DO_DRL_TRAINING, conf.DO_GRID_MODE, conf)
-    #     print("--------------------- ")
-    #     print("DRL -> Mean: " + "{:0.2f}".format(drl_p50) +
-    #           ", 75% percentile: " + "{:0.2f}".format(drl_p75))
-    #     print("--------------------- ")
+    if conf.get_do_drl():
+        print("\n--------------------- ")
+        print("--- DRL Algorithm --- ")
+        print("--------------------- ")
+        drl_p50, drl_p75, drl_pct, drl_goods50, drl_goods75 = myf.ips_drl(x_train, x_test, y_train, y_test,
+                                                                          conf.get_drl_do_training(), conf.get_use_grid_mode(), conf)
+        print("--------------------- ")
+        print("Mean: " + "{:0.2f}".format(drl_p50) + " " + "{:0.2f}".format(drl_goods50) +
+              ", 75% percentile: " + "{:0.2f}".format(drl_p75) + " " + "{:0.2f}".format(drl_goods75) +
+              ", Pct " + "{:0.2f}".format(drl_pct))
+        print("--------------------- ")
 
 
 

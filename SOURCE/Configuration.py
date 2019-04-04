@@ -49,7 +49,7 @@ class Configuration:
     # -----------------------------------------------------------------
     # -----------------------------------------------------------------
     def set_defaults(self):
-        self.conf["DO_TRAIN_TEST_SETS"] = False
+        self.conf["DO_TRAIN_TEST_SETS"] = True
 
         self.conf["DATABASE"] = ""
         self.conf["EXPERIMENT_NAME"] = ""
@@ -72,7 +72,7 @@ class Configuration:
         self.conf["ENV_MARGIN"] = 0.5
         self.conf["ENV_N_ACTIONS"] = 4
 
-        self.conf["DO_KNN"] = True
+        self.conf["DO_KNN"] = False
         self.conf["KNN_K"] = 3
 
         self.conf["DO_QL"] = False
@@ -83,6 +83,17 @@ class Configuration:
         self.conf["QL_GAMMA"] = 0.8
         self.conf["QL_ALPHA"] = 0.8
         self.conf["QL_MAX_STEPS_BY_EPISODE"] = 100
+
+        self.conf["DO_DRL"] = False
+        self.conf["DRL_DO_TRAINING"] = False
+        self.conf["DRL_MAX_STEPS_BY_EPISODE"] = 100
+        self.conf["DRL_HIDDEN"] = 256
+        self.conf["DRL_MEM_MAX_CAPACITY"] = 1000
+        self.conf["DRL_LEARNING_RATE"] = 0.01
+        self.conf["DRL_BATCH_SIZE"] = 100
+        self.conf["DRL_GAMMA"] = 0.8
+        self.conf["DRL_N_EPOCHS"] = 3
+        self.conf["DRL_N_RANDOM_TEST"] = 3
 
     # -----------------------------------------
     # -----------------------------------------------------------------
@@ -196,3 +207,33 @@ class Configuration:
 
     def get_ql_max_steps_by_episode(self):
         return self.conf["QL_MAX_STEPS_BY_EPISODE"]
+
+    def get_do_drl(self):
+        return self.conf["DO_DRL"]
+
+    def get_drl_do_training(self):
+        return self.conf["DRL_DO_TRAINING"]
+
+    def get_drl_max_steps_by_episode(self):
+        return self.conf["DRL_MAX_STEPS_BY_EPISODE"]
+
+    def get_drl_hidden(self):
+        return self.conf["DRL_HIDDEN"]
+
+    def get_drl_mem_max_capacity(self):
+        return self.conf["DRL_MEM_MAX_CAPACITY"]
+
+    def get_drl_learning_rate(self):
+        return self.conf["DRL_LEARNING_RATE"]
+
+    def get_drl_batch_size(self):
+        return self.conf["DRL_BATCH_SIZE"]
+
+    def get_drl_gamma(self):
+        return self.conf["DRL_GAMMA"]
+
+    def get_drl_n_epochs(self):
+        return self.conf["DRL_N_EPOCHS"]
+
+    def get_drl_n_random_test(self):
+        return self.conf["DRL_N_RANDOM_TEST"]

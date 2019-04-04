@@ -1,7 +1,8 @@
-import SOURCE.drl_agent as AG
-import SOURCE.Environment as ENV
+import SOURCE.drl_agent as Ag
+import SOURCE.Environment as Env
 import numpy as np
 import math
+
 
 # ----------------------------------
 # IndoorLoc_DRL class
@@ -20,14 +21,15 @@ class IndoorLocDRL:
         self.train_locations = train_locations
         self.n_training_samples = train_fingerprints.shape[0]
         self.n_aps = train_fingerprints.shape[1]
-        self.N_EPISODES_PER_FP = conf.ENV_N_EPISODES_PER_FP
+        self.N_EPISODES_PER_FP = conf.get_env_n_episodes_per_fp()
 
         # create environment and agent
-        self.env = ENV.envivonment(self.n_aps, self.train_locations, conf)
-        self.agent = AG.drl_agent(self.env, conf)
+        self.env = Env.Envivonment(self.n_aps, self.train_locations, conf)
+
+        self.agent = Ag.drl_agent(self.env, conf)
         self.training_filename = training_filename
         self.grid_mode = do_grid_mode
-        self.AGENT_N_EPOCHS = conf.AGENT_N_EPOCHS
+        self.AGENT_N_EPOCHS = conf.get_ql_n_epochs()
 
         if do_training:
             self.train()
@@ -39,9 +41,14 @@ class IndoorLocDRL:
     # ---------------------------------------------------------
     def train(self):
         if self.grid_mode:
-            episodes, episodes_real_loc = self.env.generate_episodes_grid(self.train_fingerprints, self.train_locations)
+            episodes, episodes_real_loc = self.env.generate_episodes_grid(self.train_fingerprints,
+                                                                          self.train_locations)
         else:
-            episodes, episodes_real_loc = self.env.generate_episodes_random(self.train_fingerprints, self.train_locations)
+            episodes, episodes_real_loc = self.env.generate_episodes_random(self.train_fingerprints,
+                                                                            self.train_locations,
+                                                                            self.N_EPISODES_PER_FP)
+
+        print("There are " + str(episodes.shape[0]) + " episodes for training.")
         self.agent.train(episodes, episodes_real_loc)
 
     # ---------------------------------------------------------
@@ -64,10 +71,10 @@ class IndoorLocDRL:
     # ---------------------------------------------------------
     def get_accuracy(self, test_fingerprints, test_locations):
 
-        estimated_locations = self.get_locations(test_fingerprints)
+        estimated_locations, estimated_results = self.get_locations(test_fingerprints)
         v_errors = self.estimate_accuracy(estimated_locations, test_locations)
 
-        return estimated_locations, v_errors, np.mean(v_errors), np.percentile(v_errors, 75)
+        return estimated_locations, v_errors, np.mean(v_errors), np.percentile(v_errors, 75), estimated_results
 
     # ---------------------------------------------------------
     # get_location
@@ -76,8 +83,8 @@ class IndoorLocDRL:
     # All the samples are in the same floor
     # ---------------------------------------------------------
     def get_location(self, fp):
-        observation, n_steps = self.agent.test(fp)
-        return observation[self.n_aps:self.n_aps+2]
+        estimated_loc, result = self.agent.test(fp)
+        return estimated_loc, result
 
     # ---------------------------------------------------------
     # get_locations
@@ -87,10 +94,12 @@ class IndoorLocDRL:
     def get_locations(self, test_fingerprints):
         n_test = test_fingerprints.shape[0]
         est_locations = np.zeros((n_test, 2))
+        est_results = np.zeros(n_test)
 
         i = 0
         for fp in test_fingerprints:
-            est_locations[i, ] = self.get_location(fp)
+            est_locations[i, ], est_results[i] = self.get_location(fp)
+
             i += 1
 
         return est_locations

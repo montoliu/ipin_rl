@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import SOURCE.IndoorLocKNN as IPS_knn
 import SOURCE.IndoorLocQL as IPS_ql
-#import SOURCE.indoorLocDRL as IPS_drl
+import SOURCE.indoorLocDRL as IPS_drl
 
 
 # -----------------------------------------------------------
@@ -137,19 +137,22 @@ def ips_ql(train_data, test_data, train_loc, test_loc, do_training, do_grid_mode
 
     return mean_acc, p75_acc, np.sum(est_results) / len(est_results), np.mean(v_error_goods), np.percentile(v_error_goods, 75)
 
+
 # -----------------------------------------------------------
 # -----------------------------------------------------------
 # run drl algorithm
-# def ips_drl(train_data, test_data, train_loc, test_loc, do_training, do_grid_mode, conf):
-#     model_name = "../MODELS/drl." + conf.EXPERIMENT_NAME
-#     results_name = "../RESULTS/drl." + conf.EXPERIMENT_NAME + ".csv"
-#
-#     indoorloc_model = IPS_drl.IndoorLocDRL(train_data, train_loc, conf, do_training, do_grid_mode, model_name) #Train
-#     estimated_loc, v_error, mean_acc, p75_acc = indoorloc_model.get_accuracy(test_data, test_loc) #Test and return accuracy
-#
-#     debug_data = np.concatenate((test_loc,
-#                                  estimated_loc,
-#                                  np.reshape(v_error, [len(v_error), 1])), axis=1)
-#     save_data(debug_data, results_name)
-#
-#     return mean_acc, p75_acc
+def ips_drl(train_data, test_data, train_loc, test_loc, do_training, do_grid_mode, conf):
+    model_name = "../MODELS/drl." + conf.get_experiment_name()
+    results_name = "../RESULTS/drl." + conf.get_experiment_name() + ".csv"
+
+    indoorloc_model = IPS_drl.IndoorLocDRL(train_data, train_loc, conf, do_training, do_grid_mode, model_name) #Train
+    estimated_loc, v_error, mean_acc, p75_acc, est_results = indoorloc_model.get_accuracy(test_data, test_loc) #Test and return accuracy
+    v_error_goods = v_error[np.array(est_results, dtype=bool)]
+
+    debug_data = np.concatenate((test_loc,
+                                 estimated_loc,
+                                 np.reshape(v_error, [len(v_error), 1]),
+                                 np.reshape(est_results, [len(est_results), 1])), axis=1)
+    save_data(debug_data, results_name)
+
+    return mean_acc, p75_acc, np.sum(est_results) / len(est_results), np.mean(v_error_goods), np.percentile(v_error_goods, 75)
