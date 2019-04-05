@@ -145,7 +145,16 @@ def ips_drl(train_data, test_data, train_loc, test_loc, do_training, do_grid_mod
     model_name = "../MODELS/drl." + conf.get_experiment_name()
     results_name = "../RESULTS/drl." + conf.get_experiment_name() + ".csv"
 
+    print("------------")
+    print("- Training -")
+    print("------------")
+
     indoorloc_model = IPS_drl.IndoorLocDRL(train_data, train_loc, conf, do_training, do_grid_mode, model_name) #Train
+
+    print("------------")
+    print("- Testing  -")
+    print("------------")
+
     estimated_loc, v_error, mean_acc, p75_acc, est_results = indoorloc_model.get_accuracy(test_data, test_loc) #Test and return accuracy
     v_error_goods = v_error[np.array(est_results, dtype=bool)]
 

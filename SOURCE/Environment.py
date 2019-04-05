@@ -156,8 +156,13 @@ class Envivonment:
     # ---------------------------------------------------------
     # ---------------------------------------------------------
     def normalize_loc(self, loc):
-        x = (loc[0] - self.min_x) / (self.max_x - self.min_x)
-        y = (loc[1] - self.min_y) / (self.max_y - self.min_y)
+        norm_min_x = self.min_x - 0.1
+        norm_max_x = self.max_x + 0.1
+        norm_min_y = self.min_y - 0.1
+        norm_max_y = self.max_y + 0.1
+
+        x = (loc[0] - norm_min_x) / (norm_max_x - norm_min_x)
+        y = (loc[1] - norm_min_y) / (norm_max_y - norm_min_y)
 
         return np.array([x,y])
 

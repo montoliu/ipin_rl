@@ -49,7 +49,10 @@ class IndoorLocDRL:
                                                                             self.N_EPISODES_PER_FP)
 
         print("There are " + str(episodes.shape[0]) + " episodes for training.")
-        self.agent.train(episodes, episodes_real_loc)
+
+        for i in range(self.AGENT_N_EPOCHS):
+            print("EPOCHS " + str(i))
+            self.agent.ith_train(i, episodes, episodes_real_loc)
 
     # ---------------------------------------------------------
     # estimate_accuracy
@@ -102,4 +105,4 @@ class IndoorLocDRL:
 
             i += 1
 
-        return est_locations
+        return est_locations, est_results

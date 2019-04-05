@@ -92,7 +92,8 @@ class Configuration:
         self.conf["DRL_LEARNING_RATE"] = 0.01
         self.conf["DRL_BATCH_SIZE"] = 100
         self.conf["DRL_GAMMA"] = 0.8
-        self.conf["DRL_N_EPOCHS"] = 3
+        self.conf["DRL_N_EPOCHS"] = 5
+        self.conf["DRL_N_NN_EPOCHS"] = 3
         self.conf["DRL_N_RANDOM_TEST"] = 3
 
     # -----------------------------------------
@@ -234,6 +235,9 @@ class Configuration:
 
     def get_drl_n_epochs(self):
         return self.conf["DRL_N_EPOCHS"]
+
+    def get_drl_n_nn_epochs(self):
+        return self.conf["DRL_N_NN_EPOCHS"]
 
     def get_drl_n_random_test(self):
         return self.conf["DRL_N_RANDOM_TEST"]

@@ -16,6 +16,7 @@ class drl_agent:
         self.BATCH_SIZE = conf.get_drl_batch_size()
         self.MAX_STEPS_BY_EPISODE = conf.get_drl_max_steps_by_episode()
         self.N_EPOCHS = conf.get_drl_n_epochs()
+        self.N_NN_EPOCHS = conf.get_drl_n_nn_epochs()
         self.N_RANDOM_TEST = conf.get_drl_n_random_test()
 
         self.EPS_START = 0.1
@@ -47,6 +48,16 @@ class drl_agent:
     def load_from_disk(self, filename):
         self.model = load_model(filename)
 
+
+    # ---------------------------------------------------------
+    # ---------------------------------------------------------
+    def ith_train(self, i_epoch, episodes, real_locations):
+        step = 1 / self.N_EPOCHS
+        self.EPS = 0.9 - (i_epoch * step)
+        if self.EPS < 0.1:
+            self.EPS = 0.1
+        self.train(episodes, real_locations)
+
     # ---------------------------------------------------------
     # ---------------------------------------------------------
     def train(self, episodes, real_locations):
@@ -58,8 +69,8 @@ class drl_agent:
             i += 1
             mean_acm_reward += acm_reward
 
-            if i % 10000 == 0:
-                print(str(i) + " --> " + str(mean_acm_reward / 10000))
+            if i % 100 == 0:
+                print(str(i) + " --> " + str(mean_acm_reward / 100))
                 mean_acm_reward = 0
 
     # ---------------------------------------------------------
@@ -72,8 +83,10 @@ class drl_agent:
         while n_step < self.MAX_STEPS_BY_EPISODE and done == 0:
             action = self.select_action(observation)
             next_observation, reward, done = self.env.do_step(observation, action, real_location)
-            acm_reward += reward
+            if done == -1:
+                done = 1
 
+            acm_reward += reward
             self.add_to_memory(observation, action, next_observation, reward, done)
 
             self.learn()
@@ -117,7 +130,8 @@ class drl_agent:
 
         batch_state, batch_action, batch_next_state, batch_reward, batch_done = (np.array(i) for i in zip(*transitions))
 
-        max_next_q_values = np.amax(self.model.predict(batch_next_state), axis=1)
+        next_predictions = self.model.predict(batch_next_state)
+        max_next_q_values = np.amax(next_predictions, axis=1)
         batch_targets = batch_reward + self.GAMMA * max_next_q_values
         batch_targets[batch_done, ] = np.array(batch_reward[batch_done])
         targets_f = self.model.predict(batch_state)
@@ -125,7 +139,7 @@ class drl_agent:
         for i in range(len(batch_action)):
             targets_f[i, batch_action[i]] = batch_targets[i]
 
-        history = self.model.fit(batch_state, targets_f, epochs=self.N_EPOCHS, verbose=0)
+        history = self.model.fit(batch_state, targets_f, epochs=self.N_NN_EPOCHS, verbose=0)
 
     # ---------------------------------------------------------
     # ---------------------------------------------------------
