@@ -102,7 +102,7 @@ class drl_agent:
     def select_action(self, observation):
         observation_norm = self.normalize_observation(observation)
         sample = random.random()
-        eps_threshold = 0.5
+        eps_threshold = self.EPS
         if sample > eps_threshold:
             state = np.reshape(observation_norm, [1, self.NN_INPUT])
             act_values = self.model.predict(state)

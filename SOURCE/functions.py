@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import SOURCE.IndoorLocKNN as IPS_knn
 import SOURCE.IndoorLocQL as IPS_ql
-import SOURCE.indoorLocDRL as IPS_drl
+import SOURCE.IndoorLocDRL as IPS_drl
 
 
 # -----------------------------------------------------------
